@@ -5,6 +5,8 @@ Computer Systems Architecture Course
 Assignment 1
 March 2021
 """
+import logging
+from logging.handlers import RotatingFileHandler
 
 
 class Marketplace:
@@ -19,6 +21,12 @@ class Marketplace:
         :type queue_size_per_producer: Int
         :param queue_size_per_producer: the maximum size of a queue associated with each producer
         """
+        # configuring the file handler and the format of the logs
+        handler = RotatingFileHandler("marketplace.log", maxBytes=200000, backupCount=10)
+        logging.basicConfig(level=logging.INFO,
+                            format='%(asctime)s %(message)s',
+                            handlers=[handler])
+
         # maximum number of items per producer
         self.queue_size_per_producer = queue_size_per_producer
         self.cart = list()  # list of carts as dictionaries
@@ -34,6 +42,7 @@ class Marketplace:
         """
         producer_id = self.producer_no
         self.producer_no = self.producer_no + 1  # increment for the next producer
+        logging.info("register_producer %s", producer_id)
 
         return producer_id
 
@@ -51,6 +60,7 @@ class Marketplace:
         """
         # if the producers queue is full he needs to wait
         if self.producer_queue[producer_id] >= self.queue_size_per_producer:
+            logging.info("publish False %s %s", producer_id, product)
             return False
 
         # create a dictionary to hold the info about the product
@@ -60,6 +70,7 @@ class Marketplace:
         product_aux["in_stock"] = True
         self.producer_queue[producer_id] += 1  # add the product to the queue
         self.marketplace.append(product_aux)  # add the product on the marketplace
+        logging.info("publish True %s %s", producer_id, product)
         return True
 
     def new_cart(self):
@@ -70,6 +81,7 @@ class Marketplace:
         """
         cart_id = self.cart_no
         self.cart_no = self.cart_no + 1  # increment for the next cart
+        logging.info("new cart %s", cart_id)
 
         return cart_id
 
@@ -82,8 +94,10 @@ class Marketplace:
         """
         for i, dic in enumerate(self.marketplace):
             if dic["product"] == product and dic["in_stock"] is True:
+                logging.info("got index %s %s", i, product)
                 return i
 
+        logging.info("did not get index")
         return -1
 
     def add_to_cart(self, cart_id, product):
@@ -103,6 +117,7 @@ class Marketplace:
 
         # if the element is not on the marketplace, wait
         if index == -1:
+            logging.info("add to cart False %s %s", cart_id, product)
             return False
 
         # create a dictionary holding the product in the cart
@@ -113,6 +128,7 @@ class Marketplace:
         self.marketplace[index]["in_stock"] = False  # remove product from the marketplace
         # remove product from the queue
         self.producer_queue[self.marketplace[index]["producer_id"]] -= 1
+        logging.info("add to cart True %s %s", cart_id, product)
 
         return True
 
@@ -137,6 +153,7 @@ class Marketplace:
         self.marketplace[index]["in_stock"] = True  # add product on the marketplace
         # add product back to queue
         self.producer_queue[self.marketplace[index]["producer_id"]] += 1
+        logging.info("remove from cart %s %s", cart_id, product)
 
     def place_order(self, cart_id):
         """
@@ -152,5 +169,6 @@ class Marketplace:
         for _, dic in enumerate(self.cart):
             if dic["cart_id"] == cart_id:
                 order_list.append(dic["product"])
+        logging.info("place order %s", cart_id)
 
         return order_list
