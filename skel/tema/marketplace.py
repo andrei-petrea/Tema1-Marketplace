@@ -7,6 +7,37 @@ March 2021
 """
 import logging
 from logging.handlers import RotatingFileHandler
+import unittest
+
+
+class TestStringMethods(unittest.TestCase):
+    def setUp(self):
+        self.marketplace = Marketplace(15)
+
+    def test_register_proucer(self):
+        self.assertEqual(self.marketplace.register_producer(), 0)
+
+    def test_publish(self):
+        self.assertEqual(self.marketplace.publish(0, "id1"), True)
+
+    def test_new_cart(self):
+        self.assertEqual(self.marketplace.new_cart(), 0)
+
+    def test_get_index(self):
+        self.assertEqual(self.marketplace.get_index("id1"), -1)
+
+    def test_add_to_cart(self):
+        self.assertEqual(self.marketplace.add_to_cart(0, "id1"), False)
+
+    def test_remove_from_cart(self):
+        bool1 = self.marketplace.add_to_cart(0, "id1")
+        lst1_len = len(self.marketplace.cart) - 1
+        self.marketplace.remove_from_cart(0, "id1")
+        lst2_len = len(self.marketplace.cart)
+        self.assertEqual(lst2_len, lst1_len)
+
+    def test_place_order(self):
+        self.assertEqual(self.marketplace.place_order(0), [])
 
 
 class Marketplace:
@@ -14,6 +45,7 @@ class Marketplace:
     Class that represents the Marketplace. It's the central part of the implementation.
     The producers and consumers use its methods concurrently.
     """
+
     def __init__(self, queue_size_per_producer):
         """
         Constructor
