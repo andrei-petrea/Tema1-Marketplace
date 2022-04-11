@@ -21,3 +21,38 @@
 2022-04-11 22:54:02,590 did not get index
 2022-04-11 22:54:02,591 add to cart False 0 id1
 2022-04-11 22:54:34,524 publish True 0 id1
+2022-04-11 23:01:39,448 register_producer 0
+2022-04-11 23:01:39,448 publish True 0 id1
+2022-04-11 23:02:50,830 new cart 0
+2022-04-11 23:02:50,830 did not get index
+2022-04-11 23:02:50,830 add to cart False 0 id1
+2022-04-11 23:02:58,014 did not get index
+2022-04-11 23:02:58,014 add to cart False 0 id1
+2022-04-11 23:02:58,014 did not get index
+2022-04-11 23:05:14,433 new cart 0
+2022-04-11 23:05:14,434 register_producer 0
+2022-04-11 23:05:14,434 publish True 0 id1
+2022-04-11 23:05:14,434 got index 0 id1
+2022-04-11 23:05:14,434 add to cart True 0 id1
+2022-04-11 23:05:14,434 did not get index
+2022-04-11 23:05:14,434 remove from cart 0 id1
+2022-04-11 23:06:39,100 new cart 0
+2022-04-11 23:06:39,100 register_producer 0
+2022-04-11 23:06:39,100 publish True 0 id1
+2022-04-11 23:06:39,100 got index 0 id1
+2022-04-11 23:06:39,100 add to cart True 0 id1
+2022-04-11 23:06:39,100 did not get index
+2022-04-11 23:06:39,100 remove from cart 0 id1
+2022-04-11 23:06:39,100 place order 0
+2022-04-11 23:06:50,824 new cart 0
+2022-04-11 23:06:50,824 register_producer 0
+2022-04-11 23:06:50,824 publish True 0 id1
+2022-04-11 23:06:50,824 got index 0 id1
+2022-04-11 23:06:50,824 add to cart True 0 id1
+2022-04-11 23:06:50,825 place order 0
+2022-04-11 23:07:26,815 new cart 0
+2022-04-11 23:07:26,816 register_producer 0
+2022-04-11 23:07:26,816 publish True 0 id1
+2022-04-11 23:07:26,816 got index 0 id1
+2022-04-11 23:07:26,816 add to cart True 0 id1
+2022-04-11 23:07:26,816 place order 0

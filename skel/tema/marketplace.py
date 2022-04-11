@@ -18,7 +18,8 @@ class TestStringMethods(unittest.TestCase):
         self.assertEqual(self.marketplace.register_producer(), 0)
 
     def test_publish(self):
-        self.assertEqual(self.marketplace.publish(0, "id1"), True)
+        id_prod = self.marketplace.register_producer()
+        self.assertEqual(self.marketplace.publish(id_prod, "id1"), True)
 
     def test_new_cart(self):
         self.assertEqual(self.marketplace.new_cart(), 0)
@@ -27,17 +28,27 @@ class TestStringMethods(unittest.TestCase):
         self.assertEqual(self.marketplace.get_index("id1"), -1)
 
     def test_add_to_cart(self):
-        self.assertEqual(self.marketplace.add_to_cart(0, "id1"), False)
+        id_cart = self.marketplace.new_cart()
+        self.assertEqual(self.marketplace.add_to_cart(id_cart, "id1"), False)
 
     def test_remove_from_cart(self):
-        bool1 = self.marketplace.add_to_cart(0, "id1")
+        id_cart = self.marketplace.new_cart()
+        id_prod = self.marketplace.register_producer()
+        self.marketplace.publish(id_prod, "id1")
+        bool1 = self.marketplace.add_to_cart(id_cart, "id1")
         lst1_len = len(self.marketplace.cart) - 1
-        self.marketplace.remove_from_cart(0, "id1")
+        self.marketplace.remove_from_cart(id_cart, "id1")
         lst2_len = len(self.marketplace.cart)
         self.assertEqual(lst2_len, lst1_len)
 
     def test_place_order(self):
-        self.assertEqual(self.marketplace.place_order(0), [])
+        id_cart = self.marketplace.new_cart()
+        id_prod = self.marketplace.register_producer()
+        self.marketplace.publish(id_prod, "id1")
+        bool1 = self.marketplace.add_to_cart(id_cart, "id1")
+        lst1_len = len(self.marketplace.cart)
+        lst2_len = len(self.marketplace.place_order(id_cart))
+        self.assertEqual(lst2_len, lst1_len)
 
 
 class Marketplace:
